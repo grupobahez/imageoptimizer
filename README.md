@@ -85,6 +85,7 @@ return [
 - Specify custom output folder and file names for the optimized images.
 
 ## Resize Strategies
+![Estrategias de optimización](/assets/examples.png)
    - **`fit`**: Maintains the aspect ratio; can handle `0` in width or height for proportional resizing.
    - **`fill`**: Maintains the aspect ratio and fills the entire frame; can handle `0` in width or height.
    - **`cover`**: Ensures the image covers the frame entirely, recropping from the center; can handle `0` in width or height.
