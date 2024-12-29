@@ -9,6 +9,7 @@ on:
       - fix/*
       - hotfix/*
       - refactor/*
+      - style/*
   pull_request:
     branches:
       - main
