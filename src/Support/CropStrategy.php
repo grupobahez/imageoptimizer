@@ -41,11 +41,11 @@ class CropStrategy
         $originalWidth = $image->width();
         $originalHeight = $image->height();
 
-        if (!$targetWidth) {
+        if (! $targetWidth) {
             $targetWidth = (int) round($originalWidth * ($targetHeight / $originalHeight));
         }
 
-        if (!$targetHeight) {
+        if (! $targetHeight) {
             $targetHeight = (int) round($originalHeight * ($targetWidth / $originalWidth));
         }
 

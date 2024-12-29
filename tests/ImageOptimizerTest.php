@@ -2,20 +2,19 @@
 
 namespace Grupobahez\Imageoptimizer\Tests;
 
-use Illuminate\Support\Facades\Storage;
 use Grupobahez\Imageoptimizer\ImageOptimizerManager;
+use Illuminate\Support\Facades\Storage;
 use Intervention\Image\ImageManagerStatic as Image;
 
 class ImageOptimizerTest extends TestCase
 {
-    public function setUp(): void
+    protected function setUp(): void
     {
         parent::setUp();
         Storage::fake('test');
     }
 
-    /** @test */
-    public function it_can_optimize_and_generate_thumbnails_with_defaults()
+    public function test_it_can_optimize_and_generate_thumbnails_with_defaults(): void
     {
         $config = [
             'quality' => 80,
@@ -38,8 +37,6 @@ class ImageOptimizerTest extends TestCase
             'strategy' => 'cover',
         ]);
 
-
-
         $this->assertArrayHasKey('optimized', $result);
         $this->assertArrayHasKey('thumbnails', $result);
         $this->assertTrue(Storage::disk('test')->exists('original.webp'));
@@ -47,8 +44,7 @@ class ImageOptimizerTest extends TestCase
         $this->assertTrue(Storage::disk('test')->exists('original_medium.webp'));
     }
 
-    /** @test */
-    public function it_can_optimize_and_generate_thumbnails_in_a_specific_folder()
+    public function test_it_can_optimize_and_generate_thumbnails_in_a_specific_folder(): void
     {
         $config = [
             'quality' => 80,
@@ -77,8 +73,7 @@ class ImageOptimizerTest extends TestCase
         $this->assertTrue(Storage::disk('test')->exists('new-folder/original_medium.webp'));
     }
 
-    /** @test */
-    public function it_can_optimize_and_generate_thumbnails_with_a_specific_file_name()
+    public function test_it_can_optimize_and_generate_thumbnails_with_a_specific_file_name(): void
     {
         $config = [
             'quality' => 80,
@@ -102,14 +97,12 @@ class ImageOptimizerTest extends TestCase
             'strategy' => 'cover',
         ]);
 
-
         $this->assertTrue(Storage::disk('test')->exists('custom-name.webp'));
         $this->assertTrue(Storage::disk('test')->exists('custom-name_small.webp'));
         $this->assertTrue(Storage::disk('test')->exists('custom-name_medium.webp'));
     }
 
-    /** @test */
-    public function it_can_optimize_and_generate_thumbnails_in_a_specific_folder_with_a_specific_file_name()
+    public function test_it_can_optimize_and_generate_thumbnails_in_a_specific_folder_with_a_specific_file_name(): void
     {
         $config = [
             'quality' => 80,
@@ -139,8 +132,7 @@ class ImageOptimizerTest extends TestCase
         $this->assertTrue(Storage::disk('test')->exists('new-folder/custom-name_medium.webp'));
     }
 
-    /** @test */
-    public function it_can_optimize_and_generate_thumbnails_with_relative_dimensions()
+    public function test_it_can_optimize_and_generate_thumbnails_with_relative_dimensions(): void
     {
         $config = [
             'quality' => 80,
@@ -178,5 +170,37 @@ class ImageOptimizerTest extends TestCase
 
         $this->assertEquals(400, $mediumImage->width());
         $this->assertEquals(300, $mediumImage->height());
+    }
+
+    public function test_it_can_optimize_from_url_with_defaults(): void
+    {
+        $config = [
+            'quality' => 80,
+            'format' => 'webp',
+            'strategy' => 'cover',
+        ];
+        $imageOptimizer = new ImageOptimizerManager($config);
+
+        $testImageUrl = 'https://via.placeholder.com/800x600.jpg';
+
+        $result = $imageOptimizer->optimizeFromUrl($testImageUrl, [
+            'disk' => 'test',
+            'quality' => 50,
+            'format' => 'webp',
+            'thumbnails' => [
+                'small' => [100, 100],
+                'medium' => [200, 200],
+            ],
+            'strategy' => 'cover',
+        ]);
+
+        $this->assertArrayHasKey('optimized', $result);
+        $this->assertArrayHasKey('thumbnails', $result);
+
+        $this->assertTrue(Storage::disk('test')->exists($result['optimized']));
+
+        foreach ($result['thumbnails'] as $thumbnailPath) {
+            $this->assertTrue(Storage::disk('test')->exists($thumbnailPath));
+        }
     }
 }

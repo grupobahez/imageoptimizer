@@ -6,17 +6,18 @@ use Illuminate\Support\ServiceProvider;
 
 class ImageOptimizerServiceProvider extends ServiceProvider
 {
-    public function boot()
+    public function boot(): void
     {
         $this->publishes([
-            __DIR__ . '/../config/imageoptimizer.php' => config_path('imageoptimizer.php'),
+            __DIR__.'/../config/imageoptimizer.php' => config_path('imageoptimizer.php'),
         ], 'config');
     }
 
-    public function register()
+    public function register(): void
     {
         $this->mergeConfigFrom(
-            __DIR__ . '/../config/imageoptimizer.php', 'imageoptimizer'
+            __DIR__.'/../config/imageoptimizer.php',
+            'imageoptimizer'
         );
 
         $this->app->singleton('imageoptimizer', function ($app) {

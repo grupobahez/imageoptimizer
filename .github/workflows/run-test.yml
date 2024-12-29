@@ -4,7 +4,17 @@ on:
   push:
     branches:
       - main
+      - develop
+      - feature/*
+      - fix/*
+      - hotfix/*
   pull_request:
+    branches:
+      - main
+      - develop
+      - feature/*
+      - fix/*
+      - hotfix/*
 
 jobs:
   phpunit:
@@ -12,8 +22,8 @@ jobs:
 
     strategy:
       matrix:
-        php: ['8.0', '8.1', '8.2']
-        dependencies: ['lowest', 'latest']
+        php: [8.2, 8.3, 8.4]
+        dependencies: [latest]
 
     steps:
       - name: Checkout code
@@ -30,7 +40,15 @@ jobs:
 
       - name: Install Composer dependencies
         run: |
-          composer install --${{ matrix.dependencies }} --no-progress --no-suggest --prefer-dist
+          composer install --no-progress --prefer-dist --no-suggest
+
+      - name: Check code style with Laravel Pint
+        run: |
+          vendor/bin/pint --test
+
+      - name: Run PHPStan
+        run: |
+          vendor/bin/phpstan analyse config src tests --memory-limit=1G --level=7
 
       - name: Run PHPUnit
         run: |
