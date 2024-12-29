@@ -87,7 +87,7 @@ return [
 ## Resize Strategies
 ![Estrategias de optimización](/assets/examples.png)
    - **`fit`**: Maintains the aspect ratio; can handle `0` in width or height for proportional resizing.
-   - **`fill`**: Maintains the aspect ratio and fills the entire frame; can handle `0` in width or height.
+   - **`fill`**: Ensures the image covers the frame entirely, maintains the full image; can handle `0` in width or height.
    - **`cover`**: Ensures the image covers the frame entirely, recropping from the center; can handle `0` in width or height.
    - **`crop`**: Crops the image to exact dimensions; both width and height must be specified (does not support `0`).
    - **`cover-top`**: Ensures the image covers the frame entirely, recropping from the top; can handle `0` in width or height.
