@@ -2,7 +2,7 @@
 
 namespace Grupobahez\Imageoptimizer;
 
-use Grupobahez\Imageoptimizer\Support\CropStrategy;
+use Grupobahez\Imageoptimizer\Support\ResizeStrategy;
 use Illuminate\Support\Facades\Storage;
 use Intervention\Image\ImageManagerStatic as Image;
 use InvalidArgumentException;
@@ -94,7 +94,7 @@ class ImageOptimizerManager
         if (isset($options['width']) && isset($options['height'])) {
             $width = (int) $options['width'];
             $height = (int) $options['height'];
-            $image = CropStrategy::apply($image, $strategy, $width, $height);
+            $image = ResizeStrategy::apply($image, $strategy, $width, $height);
         }
 
         Storage::disk($destinationDisk)->put(
@@ -133,7 +133,7 @@ class ImageOptimizerManager
             $thumbFilePath = ltrim($outputFolder.'/'.$baseFileName.'_'.$key.'.'.$format, '/');
 
             $thumb = clone $image;
-            $thumb = CropStrategy::apply($thumb, $strategy, $thumbWidth, $thumbHeight);
+            $thumb = ResizeStrategy::apply($thumb, $strategy, $thumbWidth, $thumbHeight);
 
             Storage::disk($destinationDisk)->put(
                 $thumbFilePath,

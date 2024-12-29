@@ -20,6 +20,7 @@ composer require grupobahez/imageoptimizer
 
    ```php
    use Grupobahez\Imageoptimizer\Facades\ImageOptimizer;
+   use Grupobahez\Imageoptimizer\Support\ResizeStrategies;
 
    // ...
    ImageOptimizer::optimize(Storage::disk('public')->path('myimage.jpg'), [
@@ -31,7 +32,8 @@ composer require grupobahez/imageoptimizer
            'medium' => [300, 300],
            // ...
        ],
-       'strategy' => 'cover', // fill | crop | fit | cover
+       'strategy' => ResizeStrategies::COVER, // fill | crop | fit | cover | cover-top | cover-bottom | cover-left | cover-right 
+                              // cover-top-left | cover-top-right | cover-bottom-left | cover-bottom-right
        'output_folder' => 'new-folder', // Optional: Specify a custom output folder
        'output_file' => 'custom-name',  // Optional: Specify a custom base filename
    ]);
@@ -40,6 +42,7 @@ composer require grupobahez/imageoptimizer
    
    ```php
    use Grupobahez\Imageoptimizer\Facades\ImageOptimizer;
+   use Grupobahez\Imageoptimizer\Support\ResizeStrategies;
 
    // ...
    ImageOptimizer::optimizeFromUrl('https://example.com/image.jpg', [
@@ -51,7 +54,7 @@ composer require grupobahez/imageoptimizer
            'medium' => [300, 300],
            // ...
        ],
-       'strategy' => 'cover', // fill | crop | fit | cover
+       'strategy' => ResizeStrategies::COVER, // fill | crop | fit | cover
        'output_folder' => 'new-folder', // Optional: Specify a custom output folder
        'output_file' => 'custom-name',  // Optional: Specify a custom base filename
    ]);
@@ -80,11 +83,20 @@ return [
 - Conversion between formats (e.g., JPEG to WebP).
 - Generation of multiple image sizes (*thumbnails*).
 - Specify custom output folder and file names for the optimized images.
-- Compatible with multiple resizing strategies:
+
+## Resize Strategies
    - **`fit`**: Maintains the aspect ratio; can handle `0` in width or height for proportional resizing.
    - **`fill`**: Maintains the aspect ratio and fills the entire frame; can handle `0` in width or height.
    - **`cover`**: Ensures the image covers the frame entirely, recropping from the center; can handle `0` in width or height.
    - **`crop`**: Crops the image to exact dimensions; both width and height must be specified (does not support `0`).
+   - **`cover-top`**: Ensures the image covers the frame entirely, recropping from the top; can handle `0` in width or height.
+   - **`cover-bottom`**: Ensures the image covers the frame entirely, recropping from the bottom; can handle `0` in width or height.
+   - **`cover-left`**: Ensures the image covers the frame entirely, recropping from the left; can handle `0` in width or height.
+   - **`cover-right`**: Ensures the image covers the frame entirely, recropping from the right; can handle `0` in width or height.
+   - **`cover-top-left`**: Ensures the image covers the frame entirely, recropping from the top-left; can handle `0` in width or height.
+   - **`cover-top-right`**: Ensures the image covers the frame entirely, recropping from the top-right; can handle `0` in width or height.
+   - **`cover-bottom-left`**: Ensures the image covers the frame entirely, recropping from the bottom-left; can handle `0` in width or height.
+   - **`cover-bottom-right`**: Ensures the image covers the frame entirely, recropping from the bottom-right; can handle `0` in width or height.
 
 ## Notes on Output Folder and Filename
 - You can specify a custom output folder using the `output_folder` option.
