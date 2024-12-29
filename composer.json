@@ -1,0 +1,39 @@
+{
+  "name": "grupobahez/imageoptimizer",
+  "description": "Package for image optimization in Laravel",
+  "keywords": ["laravel", "image", "optimizer", "thumbnail"],
+  "license": "MIT",
+  "type": "library",
+  "authors": [
+    {
+      "name": "Ricardo Ballesteros Huazano",
+      "email": "ricardo.ballesteros@grupobahez.com",
+      "homepage": "https://grupobahez.com",
+      "role": "Developer"
+    }
+  ],
+  "require": {
+    "php": ">=8.0",
+    "illuminate/support": "^8.0|^9.0|^10.0|^11.0",
+    "intervention/image": "^2.7"
+  },
+  "require-dev": {
+    "phpunit/phpunit": "^10.0.0",
+    "orchestra/testbench": "^8.18"
+  },
+  "autoload": {
+    "psr-4": {
+      "Grupobahez\\Imageoptimizer\\": "src/",
+      "Grupobahez\\Imageoptimizer\\Tests\\": "tests/"
+    }
+  },
+  "extra": {
+    "laravel": {
+      "providers": [
+        "Grupobahez\\Imageoptimizer\\ImageOptimizerServiceProvider"
+      ]
+    }
+  },
+  "minimum-stability": "stable",
+  "prefer-stable": true
+}
